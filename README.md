@@ -2,9 +2,6 @@
 
 This is a JUCE Module for embedding the Faust LLVM JIT compiler as a JUCE AudioProcessor/AudioPluginInstance. It includes supporting classes such as a Faust syntax highlighter for the JUCE code editor.
 
-The 
-
-
 Should work on OSX, Linux and eventually Windows. Only tested on OSX 10.9 thusfar.
 
 THE FOLLOWING IS WORK IN PROGRESS - NEEDS TO BE CHECKED ON A FRESH SYSTEM!
