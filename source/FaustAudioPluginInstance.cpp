@@ -43,6 +43,7 @@ FaustAudioPluginInstance::FaustAudioPluginInstance()
 : fDSPfactory(nullptr)
 , fDSP(nullptr)
 , highlight(false)
+, tempSourceCode("")
 {
 }
 
@@ -269,14 +270,25 @@ bool FaustAudioPluginInstance::allocateFactory(const String& effect_name, const 
   return res;
 }
 
-//void FaustAudioPluginInstance::updateSourcecode()
-//{
-//  createDSP();
-//}
-
-String FaustAudioPluginInstance::getSourcecode()
+void FaustAudioPluginInstance::setSourceCode(String sourceCode, bool compile)
 {
-  return fDSPfactory->getSourcecode();
+  if (compile)
+  {
+    fDSPfactory->updateSourceCode(sourceCode, this);
+    tempSourceCode = "";
+  }
+  else
+  {
+    tempSourceCode = sourceCode;
+  }
+}
+
+String FaustAudioPluginInstance::getSourceCode()
+{
+  if (tempSourceCode.length())
+    return tempSourceCode;
+  else
+    return fDSPfactory->getSourcecode();
 }
 
 void FaustAudioPluginInstance::highlightON(const String& error)

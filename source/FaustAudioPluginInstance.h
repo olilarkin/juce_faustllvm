@@ -102,8 +102,9 @@ public:
   void createDSP();
   void freeDSP();
   bool allocateFactory(const String& effectName, const File& path);
-//  void updateSourcecode();
-  String getSourcecode();
+  
+  void setSourceCode(String sourceCode, bool compile);
+  String getSourceCode();
   FaustgenFactory* getFactory() { return fDSPfactory; }
   llvm_dsp* getDSP() { return fDSP; }
   void highlightON(const String& error);
@@ -122,6 +123,7 @@ private:
   FaustgenFactory* fDSPfactory;
   llvm_dsp* fDSP;
   bool highlight;
+  String tempSourceCode;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FaustAudioPluginInstance)
 };
