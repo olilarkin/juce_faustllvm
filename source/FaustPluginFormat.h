@@ -40,7 +40,7 @@ public:
   
   FileSearchPath getDefaultLocationsToSearch() override
   {
-    return FileSearchPath("/Users/oli/Dev/MyOWL/OwlWare/Libraries/OwlPatches/OliLarkin");
+    return FileSearchPath(DEFAULT_FAUST_DSP_SEARCHPATH);
   }
   
   bool canScanForPlugins() const override
