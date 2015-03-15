@@ -17,7 +17,7 @@
 
 #define FAUSTGEN_VERSION "0.99b"
 
-#if JUCE_MAC
+#if JUCE_MAC || JUCE_LINUX
   #define FAUST_DRAW_PATH "/var/tmp/"
   #define SEPARATOR '/'
 #elif JUCE_WIN32
