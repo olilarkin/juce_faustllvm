@@ -42,5 +42,4 @@ YOU MAY NEED TO ADD THE FOLLOWING TO YOUR JUCER PROJECT:
   University of York  
   License: GPL
   
-  [www.cmrcyork.org](www.cmrcyork.org)  
-  [www.olilarkin.co.uk](www.olilarkin.co.uk) 
+  www.cmrcyork.org | www.olilarkin.co.uk
