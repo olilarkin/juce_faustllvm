@@ -12,7 +12,7 @@ THE FOLLOWING IS WORK IN PROGRESS - NEEDS TO BE CHECKED ON A FRESH SYSTEM!
 * FAUST (faust2 branch) : http://sourceforge.net/p/faudiostream/
 * libncurses e.g. sudo port install ncurses +universal
 * zlib e.g. sudo port install zlib +universal
-* libcrypto e.g. sudo port install libcrypto +universal
+* libcrypto from openssl e.g. sudo port install openssl +universal
 
 
 YOU MAY NEED TO ADD THE FOLLOWING TO YOUR JUCER PROJECT:
