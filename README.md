@@ -16,7 +16,7 @@ Install via Macports e.g. sudo port install llvm-3.5 +universal . The .jucer pro
 
 **FAUST (faust2 branch)**
 
-You need to have built and installed the faust2 branch from source and it should be build against LLVM/CLANG 3.5. You will probably need libmicrohttpd, libsndfile installed as well. Consult the faust documentation/mailing list. NOTE: the macports faust2-devel is using LLVM/CLANG 3.4. 
+You need to have built and installed the faust2 branch from source and it should be built against LLVM/CLANG 3.5. You will probably need libmicrohttpd, libsndfile installed as well. Consult the faust documentation/mailing list. NOTE: the macports faust2-devel is using LLVM/CLANG 3.4. 
 
 The test project .jucer file expects to link against /usr/local/lib/libfaust.a
 
@@ -41,7 +41,7 @@ The test project .jucer file expects to link against /opt/local/lib/libcrypto.a
 ##JUCER settings:
 
 **Extra Linker Flags:**
-(run llvm-config --libs on command line to get list)
+LLVM Libs: (run llvm-config --libs on command line to get list, there are a lot!)
 
 in order to force static linking of the libraries, the full path to the the static libraries can be added in the Jucer "extra linker flags section", without a -l in front of the library name.
 
