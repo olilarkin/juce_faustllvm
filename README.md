@@ -59,8 +59,10 @@ in order to force static linking of the libraries, the full path to the the stat
 * /opt/local/libexec/llvm-3.5/lib
 
 **License:**
+  
+  The core of this module is heavily based on the faustgen~ Max external by GRAME.
 
-  Written by Oliver Larkin,  
+  Written by Oliver Larkin 
   Contemporary Music Research Centre  
   Music Department  
   University of York  
