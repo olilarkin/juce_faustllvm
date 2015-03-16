@@ -65,7 +65,7 @@ FaustgenFactory::FaustgenFactory(const String& name, const File& path)
   // Built the complete resource path
   fLibraryPath.add(path);
   
-#if JUCE_MAC
+#if JUCE_MAC || JUCE_LINUX
   // Draw path in temporary folder
   fDrawPath = FAUST_DRAW_PATH;
 #endif
