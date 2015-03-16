@@ -45,10 +45,10 @@ The test project .jucer file expects to link against /opt/local/lib/libcrypto.a
 
 in order to force static linking of the libraries, the full path to the the static libraries can be added in the Jucer "extra linker flags section", without a -l in front of the library name.
 
-/usr/local/lib/libfaust.a
-/opt/local/lib/libncurses.a
-/opt/local/lib/libz.a
-/opt/local/lib/libcrypto.a
+/usr/local/lib/libfaust.a  
+/opt/local/lib/libncurses.a  
+/opt/local/lib/libz.a  
+/opt/local/lib/libcrypto.a  
 
 **Header search paths:**
 
