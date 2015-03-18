@@ -87,7 +87,7 @@ void FaustgenFactory::freeDSPFactory()
     (*it)->freeDSP();
   }
 
-  //deleteDSPFactory(fDSPfactory); //commented out in faustgen~
+  deleteDSPFactory(fDSPfactory);
   fDSPfactory = 0;
 }
 
