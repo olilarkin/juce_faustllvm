@@ -8,7 +8,33 @@ THE FOLLOWING IS WORK IN PROGRESS - NEEDS TO BE CHECKED ON A FRESH SYSTEM!
 
 See example CLI project https://github.com/CMRCYork/juce_faustllvm_test
 
-##Dependencies:
+
+
+##Building on Linux:
+
+The following instructions are for Ubuntu 14.04LTS. Older versions and other distros will require slightly different proceedures. You need a compiler with C++11 support.
+
+**JUCE on Linux**
+
+Firstly, here's a shell command to install the packages required for JUCE on Linux:
+
+sudo apt-get -y install g++ libfreetype6-dev libx11-dev libxinerama-dev libxcursor-dev mesa-common-dev libasound2-dev freeglut3-dev libxcomposite-dev
+
+**LLVM 3.5**
+
+Install via apt-get e.g. sudo apt-get install llvm-3.5 . NOTE: it will compile with other LLVM versions (3.1+) but you will need to adjust header/library includes accordingly and run llvm-config --libs all to get the list of all the LLVM libs for that particular version.
+
+**FAUST (faust2 branch)**
+
+You need to have built and installed the faust2 branch from source and it should be built against the same LLVM version as the project using the module.
+
+sudo apt-get install libssl-dev libncurses5-dev 
+git clone git://git.code.sf.net/p/faudiostream/code faust -b faust2
+cd faust
+make
+sudo make install
+
+##Installing Dependencies on OSX:
 
 **LLVM 3.5**
 
@@ -38,7 +64,7 @@ Part of openssl. Install via macports e.g.  sudo port install openssl +universal
 
 The test project .jucer file expects to link against /opt/local/lib/libcrypto.a
 
-##JUCER settings:
+###JUCER settings:
 
 **Extra Linker Flags:**
 LLVM Libs: (run llvm-config --libs on command line to get list, there are a lot!)
