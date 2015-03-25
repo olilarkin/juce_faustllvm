@@ -117,7 +117,10 @@ public:
   // return JUCE File for to process.svg for this instance (even if it doesn't exist)
   File getSVGFile();
   
-  // returns the full path to process.svg for this instance
+  // returns a URL "file://"
+  String getSVGFileURI();
+
+  // returns the full path to the folder containing process.svg for this instance
   String getSVGFolderName();
 
   void addInstance(FaustAudioPluginInstance* dsp) { fInstances.insert(dsp); }

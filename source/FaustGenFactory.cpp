@@ -377,6 +377,15 @@ File FaustgenFactory::getSVGFile()
   return svgPathForThisInstance.getChildFile("process.svg");
 }
 
+String FaustgenFactory::getSVGFileURI()
+{
+  File svgFile = getSVGFile();
+  
+  String URI;
+  URI << "file://" << svgFile.getFullPathName(); //TODO: will this work on windows?
+  return URI;
+}
+
 String FaustgenFactory::getSVGFolderName()
 {
   String name;
