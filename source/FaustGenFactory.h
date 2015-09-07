@@ -117,8 +117,8 @@ public:
   // return JUCE File for to process.svg for this instance (even if it doesn't exist)
   File getSVGFile();
   
-  // returns a URL "file://"
-  String getSVGFileURI();
+  // returns a URL to index.html "file://"
+  String getHTMLURI();
 
   // returns the full path to the folder containing process.svg for this instance
   String getSVGFolderName();
