@@ -114,7 +114,7 @@ public:
   void removeSVG();
   void displaySVG();
   
-  // return JUCE File for to process.svg for this instance (even if it doesn't exist)
+  // return JUCE File object for process.svg for this instance (even if it doesn't exist)
   File getSVGFile();
   
   // returns a URL to index.html "file://"
