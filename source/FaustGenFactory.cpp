@@ -108,7 +108,7 @@ llvm_dsp_factory* FaustgenFactory::createFactoryFromSourceCode(FaustAudioPluginI
   name_app << "faustgen-" << fFaustNumber;
   
   // To be sure we get a correct SVG diagram...
-  removeSVG();
+  // removeSVG();
   
   defaultCompileOptions();
   //printCompileOptions();
@@ -125,23 +125,23 @@ llvm_dsp_factory* FaustgenFactory::createFactoryFromSourceCode(FaustAudioPluginI
     argv[opt] = (char*) fCompileOptions.getReference(opt).toRawUTF8();
   }
   
-  if (fDrawPath != File::nonexistent)
-  {
-    // Generate SVG file
-    if (!generateAuxFilesFromString(name_app.toStdString(), fSourceCode.toStdString(), fCompileOptions.size(), argv, error))
-    {
-      //TODO: if there is an error here STOP
-      LOG("Generate SVG error : " + error);
-    }
-
-    File svgFile = getSVGFile();
-    
-    if (svgFile.exists())
-    {
-      File htmlFile(fDrawPath.getFullPathName() + "/" + getSVGFolderName() + "/index.html");
-      htmlFile.appendText(HTML_WRAPPER);
-    }
-  }
+//  if (fDrawPath != File::nonexistent)
+//  {
+//    // Generate SVG file
+//    if (!generateAuxFilesFromString(name_app.toStdString(), fSourceCode.toStdString(), fCompileOptions.size(), argv, error))
+//    {
+//      //TODO: if there is an error here STOP
+//      LOG("Generate SVG error : " + error);
+//    }
+//
+//    File svgFile = getSVGFile();
+//    
+//    if (svgFile.exists())
+//    {
+//      File htmlFile(fDrawPath.getFullPathName() + "/" + getSVGFolderName() + "/index.html");
+//      htmlFile.appendText(HTML_WRAPPER);
+//    }
+//  }
   
   llvm_dsp_factory* factory = createDSPFactoryFromString(name_app.toStdString(), fSourceCode.toStdString(), fCompileOptions.size(), argv, getTarget(), error, LLVM_OPTIMIZATION);
   
@@ -264,15 +264,14 @@ void FaustgenFactory::defaultCompileOptions()
   if (sizeof(FAUSTFLOAT) == 8)
     addCompileOption("-double");
   
-//   if (fDrawPath != File::nonexistent)
-//     addCompileOption("-svg");
+   if (fDrawPath != File::nonexistent)
+     addCompileOption("-svg");
   
   for (int path=0;path<fLibraryPath.getNumPaths();path++)
     addCompileOption("-I", fLibraryPath[path].getFullPathName());
   
-// Draw path
-//   if (fDrawPath != File::nonexistent)
-//     addCompileOption("-O", fDrawPath.getFullPathName());
+   if (fDrawPath != File::nonexistent)
+     addCompileOption("-O", fDrawPath.getFullPathName());
   
   //addCompileOption("-o", "tmp1.cpp");
   
@@ -344,6 +343,53 @@ default_sourcecode:
   fSourceCode = DEFAULT_CODE;
 }
 
+void FaustgenFactory::generateSVG()
+{
+  String name_app;
+  name_app << "faustgen-" << fFaustNumber;
+  
+  // To be sure we get a correct SVG diagram...
+  removeSVG();
+ 
+  // Prepare compile options
+  std::string error;
+  const char* argv[32];
+  memset(argv, 0, 32 * sizeof(char*));
+  
+  jassert(fCompileOptions.size() < 32);
+  
+  for (int opt = 0; opt < fCompileOptions.size(); opt++)
+  {
+    argv[opt] = (char*) fCompileOptions.getReference(opt).toRawUTF8();
+  }
+  
+  if (fDrawPath != File::nonexistent)
+  {
+    // Generate SVG file
+    if (!generateAuxFilesFromString(name_app.toStdString(), fSourceCode.toStdString(), fCompileOptions.size(), argv, error))
+    {
+      //TODO: if there is an error here STOP
+      LOG("Generate SVG error : " + error);
+    }
+
+    File svgFile = getSVGFile();
+
+    if (svgFile.exists())
+    {
+    #if 0
+      File htmlFile(fDrawPath.getFullPathName() + "/" + getSVGFolderName() + "/index.html");
+      htmlFile.appendText(HTML_WRAPPER);  
+    #else
+      XmlDocument svgXML(svgFile);
+      ScopedPointer<XmlElement> mainElement (svgXML.getDocumentElement());
+      mainElement->setAttribute("width", "100%");
+      mainElement->setAttribute("height", "100%");
+      mainElement->writeToFile(svgFile, String::empty);
+    #endif
+    }
+  }
+}
+
 void FaustgenFactory::removeSVG()
 {
   if (fDrawPath != File::nonexistent)
@@ -377,9 +423,13 @@ File FaustgenFactory::getSVGFile()
 String FaustgenFactory::getHTMLURI()
 {
   File svgPathForThisInstance(fDrawPath.getChildFile(getSVGFolderName()));
-    
+
   String URI;
+#if 0
   URI << "file://" << svgPathForThisInstance.getChildFile("index.html").getFullPathName(); //TODO: will this work on windows?
+#else
+  URI << "file://" << getSVGFile().getFullPathName(); //TODO: will this work on windows?
+#endif
   return URI;
 }
 
