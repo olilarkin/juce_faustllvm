@@ -264,15 +264,15 @@ void FaustgenFactory::defaultCompileOptions()
   if (sizeof(FAUSTFLOAT) == 8)
     addCompileOption("-double");
   
-  if (fDrawPath != File::nonexistent)
-    addCompileOption("-svg");
+//   if (fDrawPath != File::nonexistent)
+//     addCompileOption("-svg");
   
   for (int path=0;path<fLibraryPath.getNumPaths();path++)
     addCompileOption("-I", fLibraryPath[path].getFullPathName());
   
-  // Draw path
-  if (fDrawPath != File::nonexistent)
-    addCompileOption("-O", fDrawPath.getFullPathName());
+// Draw path
+//   if (fDrawPath != File::nonexistent)
+//     addCompileOption("-O", fDrawPath.getFullPathName());
   
   //addCompileOption("-o", "tmp1.cpp");
   
