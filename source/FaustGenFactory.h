@@ -111,7 +111,6 @@ public:
   void updateSourceCode(String sourceCode, FaustAudioPluginInstance* instance);
     
   // Compile DSP with -svg option and display the SVG files
-  void generateSVG();
   void removeSVG();
   void displaySVG();
   
