@@ -138,8 +138,16 @@ llvm_dsp_factory* FaustgenFactory::createFactoryFromSourceCode(FaustAudioPluginI
     
     if (svgFile.exists())
     {
+    #if 0
       File htmlFile(fDrawPath.getFullPathName() + "/" + getSVGFolderName() + "/index.html");
-      htmlFile.appendText(HTML_WRAPPER);
+      htmlFile.appendText(HTML_WRAPPER);  
+    #else
+      XmlDocument svgXML(svgFile);
+      ScopedPointer<XmlElement> mainElement (svgXML.getDocumentElement());
+      mainElement->setAttribute("width", "100%");
+      mainElement->setAttribute("height", "100%");
+      mainElement->writeToFile(svgFile, String::empty);
+    #endif
     }
   }
   
@@ -264,15 +272,15 @@ void FaustgenFactory::defaultCompileOptions()
   if (sizeof(FAUSTFLOAT) == 8)
     addCompileOption("-double");
   
-//   if (fDrawPath != File::nonexistent)
-//     addCompileOption("-svg");
+  if (fDrawPath != File::nonexistent)
+    addCompileOption("-svg");
   
   for (int path=0;path<fLibraryPath.getNumPaths();path++)
     addCompileOption("-I", fLibraryPath[path].getFullPathName());
   
 // Draw path
-//   if (fDrawPath != File::nonexistent)
-//     addCompileOption("-O", fDrawPath.getFullPathName());
+  if (fDrawPath != File::nonexistent)
+    addCompileOption("-O", fDrawPath.getFullPathName());
   
   //addCompileOption("-o", "tmp1.cpp");
   
@@ -379,7 +387,11 @@ String FaustgenFactory::getHTMLURI()
   File svgPathForThisInstance(fDrawPath.getChildFile(getSVGFolderName()));
     
   String URI;
+#if 0
   URI << "file://" << svgPathForThisInstance.getChildFile("index.html").getFullPathName(); //TODO: will this work on windows?
+#else
+  URI << "file://" << getSVGFile().getFullPathName(); //TODO: will this work on windows?
+#endif
   return URI;
 }
 
