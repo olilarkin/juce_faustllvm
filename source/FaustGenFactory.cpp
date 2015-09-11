@@ -54,11 +54,17 @@ static std::string getTarget() { return ""; }
 #endif
 
 FaustgenFactory::FaustgenFactory(const String& name, const File& path, const File& svgPath)
+: svgThread(this)
 {
   fUpdateInstance = 0;
   fName = name;
   fDSPfactory = 0;
   fSourceCode = DEFAULT_CODE;
+  
+  if(gFaustCounter == 0) {
+    startMTDSPFactories();
+  }
+  
   gFaustCounter++;
   fFaustNumber = gFaustCounter;
   
@@ -343,6 +349,11 @@ read_sourcecode:
   
 default_sourcecode:
   fSourceCode = DEFAULT_CODE;
+}
+
+void FaustgenFactory::startSVGThread()
+{
+  svgThread.startThread();
 }
 
 void FaustgenFactory::generateSVG()
