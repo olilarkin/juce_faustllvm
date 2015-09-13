@@ -110,15 +110,8 @@ llvm_dsp_factory* FaustgenFactory::createFactoryFromBitcode()
 
 llvm_dsp_factory* FaustgenFactory::createFactoryFromSourceCode(FaustAudioPluginInstance* instance)
 {
-  String name_app;
-  name_app << "faustgen-" << fFaustNumber;
-  
-  // To be sure we get a correct SVG diagram...
-  // removeSVG();
-  
   defaultCompileOptions();
-  //printCompileOptions();
-  
+
   // Prepare compile options
   std::string error;
   const char* argv[32];
@@ -130,27 +123,9 @@ llvm_dsp_factory* FaustgenFactory::createFactoryFromSourceCode(FaustAudioPluginI
   {
     argv[opt] = (char*) fCompileOptions.getReference(opt).toRawUTF8();
   }
-  
-//  if (fDrawPath != File::nonexistent)
-//  {
-//    // Generate SVG file
-//    if (!generateAuxFilesFromString(name_app.toStdString(), fSourceCode.toStdString(), fCompileOptions.size(), argv, error))
-//    {
-//      //TODO: if there is an error here STOP
-//      LOG("Generate SVG error : " + error);
-//    }
-//
-//    File svgFile = getSVGFile();
-//    
-//    if (svgFile.exists())
-//    {
-//      File htmlFile(fDrawPath.getFullPathName() + "/" + getSVGFolderName() + "/index.html");
-//      htmlFile.appendText(HTML_WRAPPER);
-//    }
-//  }
-  
-  llvm_dsp_factory* factory = createDSPFactoryFromString(name_app.toStdString(), fSourceCode.toStdString(), fCompileOptions.size(), argv, getTarget(), error, LLVM_OPTIMIZATION);
-  
+
+    llvm_dsp_factory* factory = createDSPFactoryFromString(getTMPName().toStdString(), fSourceCode.toStdString(), fCompileOptions.size(), argv, getTarget(), error, LLVM_OPTIMIZATION);
+    
   if (factory)
   {
     return factory;
@@ -358,9 +333,6 @@ void FaustgenFactory::startSVGThread()
 
 void FaustgenFactory::generateSVG()
 {
-  String name_app;
-  name_app << "faustgen-" << fFaustNumber;
-  
   // To be sure we get a correct SVG diagram...
   removeSVG();
  
@@ -379,7 +351,7 @@ void FaustgenFactory::generateSVG()
   if (fDrawPath != File::nonexistent)
   {
     // Generate SVG file
-    if (!generateAuxFilesFromString(name_app.toStdString(), fSourceCode.toStdString(), fCompileOptions.size(), argv, error))
+    if (!generateAuxFilesFromString(getTMPName().toStdString(), fSourceCode.toStdString(), fCompileOptions.size(), argv, error))
     {
       //TODO: if there is an error here STOP
       LOG("Generate SVG error : " + error);
@@ -449,7 +421,14 @@ String FaustgenFactory::getHTMLURI()
 String FaustgenFactory::getSVGFolderName()
 {
   String name;
-  name << "faustgen-" << fFaustNumber << "-svg";
+  name << getTMPName() << "-svg";
+  return name;
+}
+
+String FaustgenFactory::getTMPName()
+{
+  String name;
+  name << "faustgen-" << getpid() << "-" << fFaustNumber; //TODO: will this work on windows?
   return name;
 }
 

@@ -154,6 +154,7 @@ public:
 
   // returns the full path to the folder containing process.svg for this instance
   String getSVGFolderName();
+  String getTMPName();
 
   void addInstance(FaustAudioPluginInstance* dsp) { fInstances.insert(dsp); }
   void removeInstance(FaustAudioPluginInstance* dsp)
@@ -167,7 +168,7 @@ public:
       delete this;
     }
   }
-
+  
   SVGRenderThread svgThread;
 
   static int gFaustCounter;       // global variable to count the number of faustgen objects inside the patcher
