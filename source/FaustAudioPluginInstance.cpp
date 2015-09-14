@@ -67,7 +67,7 @@ void FaustAudioPluginInstance::fillInPluginDescription (PluginDescription& descr
   description.category = "";
   description.manufacturerName = getAuthor();
   description.version = "";
-  //description.fileOrIdentifier = "";
+  //description.fileOrIdentifier = ""; //TODO:? Keep link to file?
   //description.lastFileModTime = Time(0);
   description.isInstrument = false;
   description.hasSharedContainer = false;
@@ -86,8 +86,8 @@ void FaustAudioPluginInstance::fillInPluginDescription (PluginDescription& descr
 void FaustAudioPluginInstance::fillInitialInPluginDescription (PluginDescription& description)
 {
   description.name = "Faust Effect";
-  description.descriptiveName = "JIT compiled Faust Effect";
-  description.pluginFormatName = "Faust JIT compiled";
+  description.descriptiveName = "";
+  description.pluginFormatName = "FAUST";
   description.category = "";
   description.manufacturerName = "";
   description.version = "";

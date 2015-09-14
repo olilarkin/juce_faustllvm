@@ -120,19 +120,29 @@ public:
   {
     ScopedPointer<FaustAudioPluginInstance> result;
     
-    if (fileMightContainThisPluginType (desc.fileOrIdentifier))
+    //This means we are in the scanning phase... we don't want to compile all the .dsps on load
+    if (initialBufferSize == -1)
     {
-      File dspFile = File(desc.fileOrIdentifier);
-      
-      result = new FaustAudioPluginInstance();
-      
-      if (initialBufferSize != -1) // should be > -1 when we want to compile the faust code
+      if (fileMightContainThisPluginType (desc.fileOrIdentifier))
       {
-        result->initialize(faustLibraryPath, svgPath);
+        result = new FaustAudioPluginInstance();
+      }
+    }
+    else
+    {
+      result = new FaustAudioPluginInstance();
+
+      result->initialize(faustLibraryPath, svgPath);
+      
+      if(fileMightContainThisPluginType (desc.fileOrIdentifier))
+      {
+        File dspFile = File(desc.fileOrIdentifier);
+
         result->getFactory()->addLibraryPath(dspFile.getParentDirectory());
         result->getFactory()->updateSourceCode(dspFile.loadFileAsString(), result);
-        result->prepareToPlay(initialSampleRate, initialBufferSize);
       }
+                    
+      result->prepareToPlay(initialSampleRate, initialBufferSize);
     }
     
     return result.release();

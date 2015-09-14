@@ -48,14 +48,42 @@
 #include <string.h>
 
 #include "faust/gui/JSONUI.h"
-#include "faust/llvm-dsp.h"
+#include "faust/dsp/llvm-dsp.h"
 
 using namespace juce;
 
 class FaustAudioPluginInstance;
 
 class FaustgenFactory
-{  
+{
+public:
+  class SVGRenderThread : public Thread
+                        , public ChangeBroadcaster
+  {
+  public:
+    SVGRenderThread(FaustgenFactory* parentFactory)
+    : Thread("SVG render")
+    , factory(parentFactory)
+    {
+    }
+    
+    ~SVGRenderThread()
+    {
+      removeAllChangeListeners();
+    }
+    
+    void run()
+    {
+      factory->generateSVG();
+      sendChangeMessage();
+    }
+    
+    FaustgenFactory* getFactory() { return factory; }
+    
+  private:
+    FaustgenFactory* factory;
+  };
+  
 private:
   
   std::set<FaustAudioPluginInstance*> fInstances;      // set of all DSP
@@ -110,7 +138,11 @@ public:
   
   void updateSourceCode(String sourceCode, FaustAudioPluginInstance* instance);
     
-  // Compile DSP with -svg option and display the SVG files
+  void startSVGThread();
+  
+  void registerSVGThreadListenser(ChangeListener *listener) { svgThread.addChangeListener(listener); }
+ 
+  void generateSVG();
   void removeSVG();
   void displaySVG();
   
@@ -122,6 +154,7 @@ public:
 
   // returns the full path to the folder containing process.svg for this instance
   String getSVGFolderName();
+  String getTMPName();
 
   void addInstance(FaustAudioPluginInstance* dsp) { fInstances.insert(dsp); }
   void removeInstance(FaustAudioPluginInstance* dsp)
@@ -135,6 +168,8 @@ public:
       delete this;
     }
   }
+  
+  SVGRenderThread svgThread;
 
   static int gFaustCounter;       // global variable to count the number of faustgen objects inside the patcher
   
