@@ -59,6 +59,11 @@ FaustgenFactory::FaustgenFactory(const String& name, const File& path, const Fil
   fName = name;
   fDSPfactory = 0;
   fSourceCode = DEFAULT_CODE;
+  
+  if(gFaustCounter == 0) {
+    startMTDSPFactories();
+  }
+  
   gFaustCounter++;
   fFaustNumber = gFaustCounter;
   
