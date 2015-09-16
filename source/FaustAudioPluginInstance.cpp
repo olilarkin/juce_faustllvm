@@ -60,7 +60,7 @@ void FaustAudioPluginInstance::fillInPluginDescription (PluginDescription& descr
   if (description.fileOrIdentifier.length())
     description.name = File(description.fileOrIdentifier).getFileName();
   else
-    description.name = "Faust Effect";
+    description.name = "Faust Node";
 
   description.descriptiveName = getDescription();
   description.pluginFormatName = "FAUST";
@@ -85,7 +85,7 @@ void FaustAudioPluginInstance::fillInPluginDescription (PluginDescription& descr
 //static
 void FaustAudioPluginInstance::fillInitialInPluginDescription (PluginDescription& description)
 {
-  description.name = "Faust Effect";
+  description.name = "Faust Node";
   description.descriptiveName = "";
   description.pluginFormatName = "FAUST";
   description.category = "";
@@ -141,7 +141,7 @@ const String FaustAudioPluginInstance::getName() const
     return fJSONInterface["name"].toString();
   }
   else
-    return "Faust Effect";
+    return "Faust Node";
 }
 
 const String FaustAudioPluginInstance::getInputChannelName (int channelIndex) const
