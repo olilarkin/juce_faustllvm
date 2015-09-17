@@ -126,12 +126,12 @@ void FaustAudioPluginInstance::reset()
 
 bool FaustAudioPluginInstance::hasEditor() const
 {
-  return false;
+  return true;
 }
 
 AudioProcessorEditor* FaustAudioPluginInstance::createEditor()
 {
-  return nullptr;
+  return new FaustAudioProcessorEditor(*this);
 }
 
 const String FaustAudioPluginInstance::getName() const

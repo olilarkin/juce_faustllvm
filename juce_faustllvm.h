@@ -45,6 +45,7 @@
 #define LOG Logger::getCurrentLogger()->writeToLog
 
 #include "source/FaustAudioPluginInstance.h"
+#include "source/FaustAudioProcessorEditor.h"
 #include "source/FaustAudioProcessorParameter.h"
 #include "source/FaustCodeTokenizer.h"
 #include "source/FaustPluginFormat.h"
