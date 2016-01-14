@@ -43,23 +43,23 @@ public:
 
   //AudioProcessorListener
   void audioProcessorChanged (AudioProcessor*) override;
-  void audioProcessorParameterChanged (AudioProcessor* p, int parameterIndex, float newValue);
+  void audioProcessorParameterChanged (AudioProcessor* p, int parameterIndex, float newValue) override;
 
   //Timer
-  void timerCallback();
+  void timerCallback() override;
   
   // FAUST UI
-  void openTabBox(const char* label);
-  void openHorizontalBox(const char* label);
-  void openVerticalBox(const char* label);
-  void closeBox();
-  void addButton(const char* label, FAUSTFLOAT* zone);
-  void addCheckButton(const char* label, FAUSTFLOAT* zone);
-  void addVerticalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step);
-  void addHorizontalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step);
-  void addNumEntry(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step);
-  void addHorizontalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max);
-  void addVerticalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max);
+  void openTabBox(const char* label) override;
+  void openHorizontalBox(const char* label) override;
+  void openVerticalBox(const char* label) override;
+  void closeBox() override;
+  void addButton(const char* label, FAUSTFLOAT* zone) override;
+  void addCheckButton(const char* label, FAUSTFLOAT* zone) override;
+  void addVerticalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step) override;
+  void addHorizontalSlider(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step) override;
+  void addNumEntry(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step) override;
+  void addHorizontalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max) override;
+  void addVerticalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max) override;
   
 private:
   
