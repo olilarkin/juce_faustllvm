@@ -124,7 +124,7 @@ llvm_dsp_factory* FaustgenFactory::createFactoryFromSourceCode(FaustAudioPluginI
     argv[opt] = (char*) fCompileOptions.getReference(opt).toRawUTF8();
   }
 
-    llvm_dsp_factory* factory = createDSPFactoryFromString(getTMPName().toStdString(), fSourceCode.toStdString(), fCompileOptions.size(), argv, getTarget(), error, LLVM_OPTIMIZATION);
+  llvm_dsp_factory* factory = createDSPFactoryFromString(getTMPName().toStdString(), fSourceCode.toStdString(), fCompileOptions.size(), argv, getTarget(), error, LLVM_OPTIMIZATION);
     
   if (factory)
   {
