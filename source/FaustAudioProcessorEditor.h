@@ -11,6 +11,7 @@
 #define FAUSTAUDIOPROCESSOREDITOR_H_INCLUDED
 
 #include "faust/gui/UI.h"
+#include "faust/gui/meta.h"
 
 class FaustSlider : public Slider
 {
@@ -33,6 +34,7 @@ class FaustAudioProcessorEditor : public AudioProcessorEditor
                                 , private AudioProcessorListener
                                 , private Timer
                                 , public UI
+                                , public Meta
 {
 public:
   FaustAudioProcessorEditor (AudioProcessor& processor);
@@ -61,6 +63,12 @@ public:
   void addHorizontalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max) override;
   void addVerticalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max) override;
   
+  // UI metadata declarations
+  void declare(FAUSTFLOAT* zone, const char* key, const char* val) override;
+  
+  // FAUST metadata declarations
+  void declare(const char* key, const char* value) override;
+
 private:
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FaustAudioProcessorEditor)
