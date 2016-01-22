@@ -247,7 +247,8 @@ void FaustgenFactory::defaultCompileOptions()
   
    if (fDrawPath != File::nonexistent) {
      addCompileOption("-svg");
-     addCompileOption("-sn");
+     addCompileOption("-sn"); //use --simple-names (without arguments) during block-diagram generation
+     addCompileOption("-sd"); //try to further --simplify-diagrams before drawing them
    }
   
   for (int path=0;path<fLibraryPath.getNumPaths();path++)
