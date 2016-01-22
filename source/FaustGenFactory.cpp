@@ -182,6 +182,8 @@ llvm_dsp* FaustgenFactory::createDSPAux(FaustAudioPluginInstance* instance)
   // Otherwise creates default DSP keeping the same input/output number
   fDSPfactory = createDSPFactoryFromString("default", DEFAULT_CODE, 0, 0, getTarget(), error, LLVM_OPTIMIZATION);
 
+  jassert(fDSPfactory);
+
   if (fDSPfactory)
   {
     dsp = createDSPInstance(fDSPfactory);
