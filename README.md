@@ -18,7 +18,11 @@ macosx_deployment_target 10.9
 
 the .jucer project expects ports to be installed in certain locations. If you have customized macports configuration, you may have to adjust the .jucer project in order to build.
 
-even on a fast machine the following will take a long time to build!
+even on a fast machine the following will take a long time to build! Be prepared to leave your computer for over an hour!
+
+To do everything in one go you can use the following command:
+
+*sudo port install llvm-3.7 +universal ncurses +universal zlib +universal openssl +universal*
 
 **LLVM 3.7**
 
