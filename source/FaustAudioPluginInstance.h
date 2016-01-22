@@ -115,6 +115,7 @@ public:
   const String getDescription() const;
   
   const bool getHighlight() { return highlight; }
+  const String getCompilerMessage() { return lastCompilerMessage; }
 
   //MUST CALL AFTER CREATION
   void initialize(const File &libraryPath, const File& svgPath = File::nonexistent);
@@ -127,6 +128,7 @@ private:
   llvm_dsp* fDSP;
   bool highlight;
   String tempSourceCode;
+  String lastCompilerMessage;
   
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FaustAudioPluginInstance)
 };

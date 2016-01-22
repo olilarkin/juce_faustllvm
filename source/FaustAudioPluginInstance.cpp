@@ -43,7 +43,8 @@ FaustAudioPluginInstance::FaustAudioPluginInstance()
 : fDSPfactory(nullptr)
 , fDSP(nullptr)
 , highlight(false)
-, tempSourceCode("")
+, tempSourceCode(String::empty)
+, lastCompilerMessage(String::empty)
 {
 }
 
@@ -304,6 +305,7 @@ String FaustAudioPluginInstance::getSourceCode()
 
 void FaustAudioPluginInstance::highlightON(const String& error)
 {
+  lastCompilerMessage = error;
   highlight = true;
 }
 
