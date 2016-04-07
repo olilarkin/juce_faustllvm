@@ -86,7 +86,7 @@ public:
     return File (desc.fileOrIdentifier).getLastModificationTime() != desc.lastFileModTime;
   }
   
-  StringArray searchPathsForPlugins (const FileSearchPath& directoriesToSearch, const bool recursive) override
+  StringArray searchPathsForPlugins (const FileSearchPath& directoriesToSearch, const bool recursive, bool allowPluginsWhichRequireAsynchronousInstantiation = false) override
   {
     StringArray results;
 
@@ -116,7 +116,7 @@ public:
     }
   }
   
-  AudioPluginInstance* createInstanceFromDescription (const PluginDescription& desc, double initialSampleRate, int initialBufferSize) override
+  AudioPluginInstance* createInstanceFromDescription (const PluginDescription& desc, double initialSampleRate, int initialBufferSize)
   {
     ScopedPointer<FaustAudioPluginInstance> result;
     
@@ -147,6 +147,18 @@ public:
     
     return result.release();
   };
+  
+private:
+  void createPluginInstance (const PluginDescription&, double initialSampleRate, int initialBufferSize, void* userData, void (*callback) (void*, AudioPluginInstance*, const String&)) override
+  {
+    //TODO:
+  }
+  
+  bool requiresUnblockedMessageThreadDuringCreation (const PluginDescription&) const noexcept override
+  {
+    return false;
+  }
+  
 };
 
 

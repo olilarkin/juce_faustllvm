@@ -10,7 +10,7 @@
 #ifndef FAUSTDSPWATCHER_H_INCLUDED
 #define FAUSTDSPWATCHER_H_INCLUDED
 
-#include "modules/juce_core/juce_core.h"
+#include <juce_core/juce_core.h>
 
 class FaustDSPWatcher : public Timer
 {
