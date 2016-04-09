@@ -1,8 +1,7 @@
 /*
   This file is part of the juce_faustllvm JUCE module
   Written by Oliver Larkin
-  Contemporary Music Research Centre
-  Music Department, University of York
+  www.olilarkin.co.uk
   License: GPL
   
   based on Faustgen~ by GRAME
