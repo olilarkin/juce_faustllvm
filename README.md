@@ -4,7 +4,7 @@ This is a JUCE Module for embedding the Faust LLVM JIT compiler as a JUCE AudioP
 
 Should work on OSX, Linux and eventually Windows.
 
-See example CLI project https://github.com/CMRCYork/juce_faustllvm_test
+See example CLI project https://github.com/olilarkin/juce_faustllvm_test
 
 ##Dependencies:
 
@@ -95,9 +95,5 @@ in order to force static linking of the libraries, the full path to the the stat
 The core of this module is heavily based on the faustgen~ Max external by GRAME.
 
 Written by Oliver Larkin    
-Contemporary Music Research Centre  
-Music Department  
-University of York  
 License: GPL
-  
-www.cmrcyork.org | www.olilarkin.co.uk
+www.olilarkin.co.uk
