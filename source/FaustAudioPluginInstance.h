@@ -107,7 +107,7 @@ public:
   void setSourceCode(String sourceCode, bool compile);
   String getSourceCode();
   FaustgenFactory* getFactory() { return fDSPfactory; }
-  llvm_dsp* getDSP() { return fDSP; }
+  ::dsp* getDSP() { return fDSP; }
   void highlightON(const String& error);
   void highlightOFF();
   
@@ -125,7 +125,7 @@ private:
 
   var fJSONInterface;
   FaustgenFactory* fDSPfactory;
-  llvm_dsp* fDSP;
+  ::dsp* fDSP;
   bool highlight;
   String tempSourceCode;
   String lastCompilerMessage;

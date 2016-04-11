@@ -134,7 +134,7 @@ AudioProcessorEditor* FaustAudioPluginInstance::createEditor()
 {
   FaustAudioProcessorEditor* editor = new FaustAudioProcessorEditor(*this);
   fDSP->buildUserInterface(editor);
-  fDSP->metadata(editor);
+  //fDSP->metadata(editor);
   
   return editor;
 }
@@ -260,8 +260,8 @@ void FaustAudioPluginInstance::createDSP()
 
 void FaustAudioPluginInstance::freeDSP()
 {
-  deleteDSPInstance(fDSP);
-  fDSP = 0;
+  delete fDSP;
+  fDSP = nullptr;
 }
 
 bool FaustAudioPluginInstance::allocateFactory(const String& effect_name, const File& libraryPath, const File& svgPath)

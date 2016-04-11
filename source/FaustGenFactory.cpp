@@ -40,6 +40,10 @@
 #include "FaustAudioPluginInstance.h"
 #include <stdio.h>
 
+#define LLVM_DSP
+#include "faust/dsp/poly-dsp.h"
+
+
 int FaustgenFactory::gFaustCounter = 0;
 std::map<String, FaustgenFactory*> FaustgenFactory::gFactoryMap;
 
@@ -141,16 +145,23 @@ llvm_dsp_factory* FaustgenFactory::createFactoryFromSourceCode(FaustAudioPluginI
   }
 }
 
-llvm_dsp* FaustgenFactory::createDSPAux(FaustAudioPluginInstance* instance)
+::dsp* FaustgenFactory::createInstance()
 {
-  llvm_dsp* dsp = 0;
+  //dsp* dsp = new mydsp_poly(4, createDSPInstance(fDSPfactory), false);
+  dsp* dsp = createDSPInstance(fDSPfactory);
+  return dsp;
+}
+
+::dsp* FaustgenFactory::createDSPAux(FaustAudioPluginInstance* instance)
+{
+  ::dsp* dsp = nullptr;
   std::string error;
   String logStr;
 
   // Factory already allocated
   if (fDSPfactory)
   {
-    dsp = createDSPInstance(fDSPfactory);
+    dsp = createInstance();
     logStr << "Factory already allocated, " <<  dsp->getNumInputs() << " input(s), " << dsp->getNumOutputs() << " output(s)";
     goto end;
   }
@@ -161,7 +172,7 @@ llvm_dsp* FaustgenFactory::createDSPAux(FaustAudioPluginInstance* instance)
     fDSPfactory = createFactoryFromBitcode();
     if (fDSPfactory)
     {
-      dsp = createDSPInstance(fDSPfactory);
+      dsp = createInstance();
       logStr << "Compilation from bitcode succeeded, " <<  dsp->getNumInputs() << " input(s), " << dsp->getNumOutputs() << " output(s)";
       goto end;
     }
@@ -173,7 +184,7 @@ llvm_dsp* FaustgenFactory::createDSPAux(FaustAudioPluginInstance* instance)
     fDSPfactory = createFactoryFromSourceCode(instance);
     if (fDSPfactory)
     {
-      dsp = createDSPInstance(fDSPfactory);
+      dsp = createInstance();
       logStr << "Compilation from source code succeeded, " <<  dsp->getNumInputs() << " input(s), " << dsp->getNumOutputs() << " output(s)";
       goto end;
     }
@@ -186,7 +197,7 @@ llvm_dsp* FaustgenFactory::createDSPAux(FaustAudioPluginInstance* instance)
 
   if (fDSPfactory)
   {
-    dsp = createDSPInstance(fDSPfactory);
+    dsp = createInstance();
     logStr << "Allocation of default DSP succeeded, " << dsp->getNumInputs() << " input(s), " << dsp->getNumOutputs() << " output(s)";
   }
 
