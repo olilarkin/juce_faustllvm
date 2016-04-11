@@ -264,18 +264,18 @@ void FaustAudioPluginInstance::freeDSP()
   fDSP = 0;
 }
 
-bool FaustAudioPluginInstance::allocateFactory(const String& effect_name, const File& libraryPath, const File& svgPath)
+bool FaustAudioPluginInstance::allocateFactory(const String& effectName, const File& libraryPath, const File& svgPath)
 {
   bool res = false;
   
-  if (FaustgenFactory::gFactoryMap.find(effect_name.toStdString()) != FaustgenFactory::gFactoryMap.end())
+  if (FaustgenFactory::gFactoryMap.find(effectName.toStdString()) != FaustgenFactory::gFactoryMap.end())
   {
-    fDSPfactory = FaustgenFactory::gFactoryMap[effect_name];
+    fDSPfactory = FaustgenFactory::gFactoryMap[effectName];
   }
   else
   {
-    fDSPfactory = new FaustgenFactory(effect_name, libraryPath, svgPath);
-    FaustgenFactory::gFactoryMap[effect_name] = fDSPfactory;
+    fDSPfactory = new FaustgenFactory(effectName, libraryPath, svgPath);
+    FaustgenFactory::gFactoryMap[effectName] = fDSPfactory;
     res = true;
   }
   
@@ -375,9 +375,9 @@ void FaustAudioPluginInstance::initialize(const File &libraryPath, const File &s
   // Empty (= no name) FaustAudioPluginInstance will be internally separated as groups with different names
   if (fDSPfactory == nullptr)
   {
-    String effect_name;
-    effect_name << "FaustgenFactory-" << FaustgenFactory::gFaustCounter;
-    allocateFactory(effect_name.toStdString(), libraryPath, svgPath);
+    String effectName;
+    effectName << "FaustgenFactory-" << FaustgenFactory::gFaustCounter;
+    allocateFactory(effectName.toStdString(), libraryPath, svgPath);
   }
   
   fDSPfactory->addLibraryPath(libraryPath);
