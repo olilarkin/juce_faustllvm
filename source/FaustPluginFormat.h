@@ -12,7 +12,7 @@
 
 #include "FaustAudioPluginInstance.h"
 
-class FaustPluginFormat   : public AudioPluginFormat
+class FaustPluginFormat : public AudioPluginFormat
 {
 private:
   File faustLibraryPath;
@@ -22,11 +22,20 @@ public:
   FaustPluginFormat(const File& faustLibraryPath, const File& svgPath = File::nonexistent)
   : faustLibraryPath(faustLibraryPath)
   , svgPath(svgPath)
-  {};
+  {
+  }
   
-  ~FaustPluginFormat() {}
+  ~FaustPluginFormat()
+  {
+  }
 
-  void getAllTypes (OwnedArray <PluginDescription>& results);
+  void getAllTypes (OwnedArray <PluginDescription>& results)
+  {
+    PluginDescription* desc = new PluginDescription();
+    FaustAudioPluginInstance::fillInitialInPluginDescription(*desc);
+    
+    results.add(desc);    
+  }
 
   String getName() const override
   {
@@ -35,6 +44,9 @@ public:
   
   bool fileMightContainThisPluginType (const String& fileOrIdentifier) override
   {
+    if(fileOrIdentifier == String::empty)
+      return true;
+    
     const File f (File::createFileWithoutCheckingPath (fileOrIdentifier));
     return f.existsAsFile() && f.hasFileExtension (".dsp");
   }
@@ -116,9 +128,10 @@ public:
     }
   }
   
-  AudioPluginInstance* createInstanceFromDescription (const PluginDescription& desc, double initialSampleRate, int initialBufferSize)
+private:
+  void createPluginInstance (const PluginDescription& desc, double initialSampleRate, int initialBufferSize, void* userData, void (*callback) (void*, AudioPluginInstance*, const String&)) override
   {
-    ScopedPointer<FaustAudioPluginInstance> result;
+    FaustAudioPluginInstance* result = nullptr;
     
     //This means we are in the scanning phase... we don't want to compile all the .dsps on load
     if (initialBufferSize == -1)
@@ -131,27 +144,21 @@ public:
     else
     {
       result = new FaustAudioPluginInstance();
-
+      
       result->initialize(faustLibraryPath, svgPath);
       
-      if(fileMightContainThisPluginType (desc.fileOrIdentifier))
+      if(desc.fileOrIdentifier != String::empty && fileMightContainThisPluginType (desc.fileOrIdentifier))
       {
         File dspFile = File(desc.fileOrIdentifier);
-
+        
         result->getFactory()->addLibraryPath(dspFile.getParentDirectory());
         result->getFactory()->updateSourceCode(dspFile.loadFileAsString(), result);
       }
-                    
+      
       result->prepareToPlay(initialSampleRate, initialBufferSize);
     }
     
-    return result.release();
-  };
-  
-private:
-  void createPluginInstance (const PluginDescription&, double initialSampleRate, int initialBufferSize, void* userData, void (*callback) (void*, AudioPluginInstance*, const String&)) override
-  {
-    //TODO:
+    callback (userData, result, result == nullptr ? NEEDS_TRANS ("Problem creating FAUST Plugin Instance") : String());
   }
   
   bool requiresUnblockedMessageThreadDuringCreation (const PluginDescription&) const noexcept override

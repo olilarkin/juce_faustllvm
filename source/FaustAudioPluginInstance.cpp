@@ -68,7 +68,7 @@ void FaustAudioPluginInstance::fillInPluginDescription (PluginDescription& descr
   description.category = "";
   description.manufacturerName = getAuthor();
   description.version = "";
-  //description.fileOrIdentifier = ""; //TODO:? Keep link to file?
+  //description.fileOrIdentifier = String::empty; //TODO:? Keep link to file?
   //description.lastFileModTime = Time(0);
   description.isInstrument = false;
   description.hasSharedContainer = false;
@@ -92,7 +92,7 @@ void FaustAudioPluginInstance::fillInitialInPluginDescription (PluginDescription
   description.category = "";
   description.manufacturerName = "";
   description.version = "";
-  description.fileOrIdentifier = "";
+  description.fileOrIdentifier = String::empty;
   description.lastFileModTime = Time(0);
   description.isInstrument = false;
   description.hasSharedContainer = false;
@@ -373,7 +373,7 @@ void FaustAudioPluginInstance::addVerticalBargraph(const char* label, FAUSTFLOAT
 void FaustAudioPluginInstance::initialize(const File &libraryPath, const File &svgPath)
 {
   // Empty (= no name) FaustAudioPluginInstance will be internally separated as groups with different names
-  if (!fDSPfactory)
+  if (fDSPfactory == nullptr)
   {
     String effect_name;
     effect_name << "FaustgenFactory-" << FaustgenFactory::gFaustCounter;
