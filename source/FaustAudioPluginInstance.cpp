@@ -113,13 +113,29 @@ void FaustAudioPluginInstance::releaseResources()
 {
 }
 
-void FaustAudioPluginInstance::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
+void FaustAudioPluginInstance::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
+{
+  jassert (! isUsingDoublePrecision());
+  jassert (sizeof(FAUSTFLOAT) == 4); //TODO: if FAUSTFLOAT == 8 allways need to process the faust dsp with double precision
+  process (buffer, midiMessages);
+}
+
+void FaustAudioPluginInstance::processBlock (AudioBuffer<double>& buffer, MidiBuffer& midiMessages)
+{
+  jassert (isUsingDoublePrecision());
+  jassert (sizeof(FAUSTFLOAT) == 8); //TODO: if FAUSTFLOAT == 4 allways need to process the faust dsp with single precision
+  process (buffer, midiMessages);
+}
+
+template <typename FloatType>
+void FaustAudioPluginInstance::process (AudioBuffer<FloatType>& buffer,MidiBuffer& midiMessages)
 {
   const ScopedLock lock(fDSPfactory->fDSPMutex);
   
   if (fDSP != nullptr)
     fDSP->compute(buffer.getNumSamples(), (FAUSTFLOAT**)buffer.getArrayOfReadPointers(), (FAUSTFLOAT**)buffer.getArrayOfWritePointers());
 }
+
 
 void FaustAudioPluginInstance::reset()
 {
@@ -169,6 +185,10 @@ bool FaustAudioPluginInstance::isOutputChannelStereoPair (int index) const
   return false;
 }
 
+bool FaustAudioPluginInstance::supportsDoublePrecisionProcessing() const
+{
+  return sizeof(FAUSTFLOAT) == 8;
+}
 
 bool FaustAudioPluginInstance::acceptsMidi() const
 {

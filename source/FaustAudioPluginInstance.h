@@ -60,7 +60,10 @@ public:
 // AudioProcessor
   void prepareToPlay (double sampleRate, int samplesPerBlock) override;
   void releaseResources() override;
-  void processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages) override;
+
+  void processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages) override;
+  void processBlock (AudioBuffer<double>& buffer, MidiBuffer& midiMessages) override;
+  
   void reset() override;
   
   bool hasEditor() const override;
@@ -72,6 +75,7 @@ public:
   const String getOutputChannelName (int channelIndex) const override;
   bool isInputChannelStereoPair (int index) const override;
   bool isOutputChannelStereoPair (int index) const override;
+  bool supportsDoublePrecisionProcessing() const override;
   
   bool acceptsMidi() const override;
   bool producesMidi() const override;
@@ -123,6 +127,9 @@ public:
 private:
   bool allocateFactory(const String& effectName, const File& libraryPath, const File& svgPath = File::nonexistent);
 
+  template <typename FloatType>
+  void process (AudioBuffer<FloatType>& buffer, MidiBuffer& midiMessages);
+  
   var fJSONInterface;
   FaustgenFactory* fDSPfactory;
   llvm_dsp* fDSP;
