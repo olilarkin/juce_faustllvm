@@ -106,7 +106,7 @@ void FaustAudioPluginInstance::prepareToPlay (double sampleRate, int samplesPerB
     createDSP();
   
   fDSP->init(sampleRate);
-  setPlayConfigDetails(fDSP->getNumInputs(),  fDSP->getNumOutputs(), sampleRate, samplesPerBlock);
+  setPlayConfigDetails(fDSP->getNumInputs(), fDSP->getNumOutputs(), sampleRate, samplesPerBlock);
 }
 
 void FaustAudioPluginInstance::releaseResources()
