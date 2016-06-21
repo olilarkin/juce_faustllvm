@@ -249,12 +249,12 @@ void FaustAudioPluginInstance::setStateInformation (const void* data, int sizeIn
   {
     if (xmlState->hasTagName ("FAUSTGEN"))
     {
+      fDSPfactory->freeDSPFactory();
       fDSPfactory->setStateInformation(*xmlState);
     }
   }
   
-  if (!fDSP)
-    createDSP();
+  createDSP();
 }
 
 void FaustAudioPluginInstance::createDSP()
@@ -267,7 +267,7 @@ void FaustAudioPluginInstance::createDSP()
   // Initialize User Interface
   fDSP->buildUserInterface(this);
 
-  Result res = JSON::parse(fDSPfactory->getJSON(), fJSONInterface);
+  JSON::parse(fDSPfactory->getJSON(), fJSONInterface);
   
   // Initialize at the system's sampling rate
   if (getSampleRate() == 0)
