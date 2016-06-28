@@ -22,13 +22,13 @@ even on a fast machine the following will take a long time to build! Be prepared
 
 To do everything in one go you can use the following command:
 
-*sudo port install llvm-3.7 +universal ncurses +universal zlib +universal openssl +universal*
+*sudo port install llvm-3.5 +universal ncurses +universal zlib +universal openssl +universal*
 
 **LLVM 3.7**
 
-Install via Macports e.g. *sudo port install llvm-3.7 +universal*
+Install via Macports e.g. *sudo port install llvm-3.5 +universal*
 
-The .jucer projects expects the libraries to be in /opt/local/libexec/llvm-3.7/lib
+The .jucer projects expects the libraries to be in /opt/local/libexec/llvm-3.5/lib
 
 **libncurses**
 
@@ -52,9 +52,9 @@ The .jucer projects expect to link against /opt/local/lib/libcrypto.a
 
 http://faust.grame.fr/download/
 
-You need to have built and installed the faust2 branch from source and it should be built against LLVM 3.7. 
+You need to have built and installed the faust2 branch from source and it should be built against LLVM 3.5. 
 
-If you have multiple LLVM versions installed you should run *sudo port select llvm mp-llvm-3.7* prior to building faust2
+If you have multiple LLVM versions installed you should run *sudo port select llvm mp-llvm-3.5* prior to building faust2
 
 You may need to add the MacPorts include folder before building faust
 
@@ -88,7 +88,7 @@ in order to force static linking of the libraries, the full path to the the stat
 
 **Extra Library search paths:**
 
-/opt/local/libexec/llvm-3.7/lib
+/opt/local/libexec/llvm-3.5/lib
 
 **License:**
   
