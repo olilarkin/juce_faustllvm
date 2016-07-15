@@ -43,6 +43,7 @@ FaustAudioPluginInstance::FaustAudioPluginInstance()
 : fDSPfactory(nullptr)
 , fDSP(nullptr)
 , highlight(false)
+, needsToBeCompiled(false)
 , tempSourceCode(String::empty)
 , lastCompilerMessage(String::empty)
 {
@@ -308,10 +309,12 @@ void FaustAudioPluginInstance::setSourceCode(String sourceCode, bool compile)
   if (compile)
   {
     fDSPfactory->updateSourceCode(sourceCode, this);
+    needsToBeCompiled = false;
     tempSourceCode = "";
   }
   else
   {
+    needsToBeCompiled = true;
     tempSourceCode = sourceCode;
   }
 }

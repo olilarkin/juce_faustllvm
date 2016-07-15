@@ -119,6 +119,7 @@ public:
   const String getDescription() const;
   
   const bool getHighlight() { return highlight; }
+  const bool getNeedsToBeCompiled() { return needsToBeCompiled; }
   const String getCompilerMessage() { return lastCompilerMessage; }
 
   //MUST CALL AFTER CREATION
@@ -134,6 +135,7 @@ private:
   FaustgenFactory* fDSPfactory;
   llvm_dsp* fDSP;
   bool highlight;
+  bool needsToBeCompiled;
   String tempSourceCode;
   String lastCompilerMessage;
   
