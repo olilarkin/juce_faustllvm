@@ -58,7 +58,7 @@ FaustgenFactory::FaustgenFactory(const String& name, const File& path, const Fil
 {
   fUpdateInstance = 0;
   fName = name;
-  fDSPfactory = 0;
+  fDSPfactory = nullptr;
   fSourceCode = DEFAULT_CODE;
   
   if(gFaustCounter == 0) {
@@ -90,7 +90,7 @@ void FaustgenFactory::freeDSPFactory()
   }
 
   deleteDSPFactory(fDSPfactory);
-  fDSPfactory = 0;
+  fDSPfactory = nullptr;
 }
 
 llvm_dsp_factory* FaustgenFactory::createFactoryFromBitcode()
