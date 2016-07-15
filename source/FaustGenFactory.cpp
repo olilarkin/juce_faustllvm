@@ -141,16 +141,16 @@ llvm_dsp_factory* FaustgenFactory::createFactoryFromSourceCode(FaustAudioPluginI
   }
 }
 
-llvm_dsp* FaustgenFactory::createDSPAux(FaustAudioPluginInstance* instance)
+dsp* FaustgenFactory::createDSPAux(FaustAudioPluginInstance* instance)
 {
-  llvm_dsp* dsp = 0;
+  dsp* dsp = nullptr;
   std::string error;
   String logStr;
 
   // Factory already allocated
   if (fDSPfactory)
   {
-    dsp = createDSPInstance(fDSPfactory);
+    dsp = fDSPfactory->createDSPInstance();
     logStr << "Factory already allocated, " <<  dsp->getNumInputs() << " input(s), " << dsp->getNumOutputs() << " output(s)";
     goto end;
   }
@@ -161,7 +161,7 @@ llvm_dsp* FaustgenFactory::createDSPAux(FaustAudioPluginInstance* instance)
     fDSPfactory = createFactoryFromBitcode();
     if (fDSPfactory)
     {
-      dsp = createDSPInstance(fDSPfactory);
+      dsp = fDSPfactory->createDSPInstance();
       logStr << "Compilation from bitcode succeeded, " <<  dsp->getNumInputs() << " input(s), " << dsp->getNumOutputs() << " output(s)";
       goto end;
     }
@@ -173,7 +173,7 @@ llvm_dsp* FaustgenFactory::createDSPAux(FaustAudioPluginInstance* instance)
     fDSPfactory = createFactoryFromSourceCode(instance);
     if (fDSPfactory)
     {
-      dsp = createDSPInstance(fDSPfactory);
+      dsp = fDSPfactory->createDSPInstance();
       logStr << "Compilation from source code succeeded, " <<  dsp->getNumInputs() << " input(s), " << dsp->getNumOutputs() << " output(s)";
       goto end;
     }
@@ -186,7 +186,7 @@ llvm_dsp* FaustgenFactory::createDSPAux(FaustAudioPluginInstance* instance)
 
   if (fDSPfactory)
   {
-    dsp = createDSPInstance(fDSPfactory);
+    dsp = fDSPfactory->createDSPInstance();
     logStr << "Allocation of default DSP succeeded, " << dsp->getNumInputs() << " input(s), " << dsp->getNumOutputs() << " output(s)";
   }
 
@@ -196,7 +196,7 @@ end:
 
   // Prepare JSON
   JSONUI builder(dsp->getNumInputs(), dsp->getNumOutputs());
-  metadataDSPFactory(fDSPfactory, &builder);
+  dsp->metadata(&builder);
   dsp->buildUserInterface(&builder);
   fJSON = String(builder.JSON());
   

@@ -281,8 +281,8 @@ void FaustAudioPluginInstance::createDSP()
 
 void FaustAudioPluginInstance::freeDSP()
 {
-  deleteDSPInstance(fDSP);
-  fDSP = 0;
+  delete fDSP;
+  fDSP = nullptr;
 }
 
 bool FaustAudioPluginInstance::allocateFactory(const String& effectName, const File& libraryPath, const File& svgPath)

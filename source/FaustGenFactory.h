@@ -117,7 +117,7 @@ public:
   
   llvm_dsp_factory* createFactoryFromBitcode();
   llvm_dsp_factory* createFactoryFromSourceCode(FaustAudioPluginInstance* instance);
-  llvm_dsp* createDSPAux(FaustAudioPluginInstance* instance);
+  dsp* createDSPAux(FaustAudioPluginInstance* instance);
   
   void freeDSPFactory();
   
