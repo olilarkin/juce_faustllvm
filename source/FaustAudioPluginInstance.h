@@ -44,8 +44,6 @@
 #include "FaustGenFactory.h"
 #include "faust/gui/UI.h"
 
-#include "FaustAudioProcessorEditor.h"
-
 class FaustAudioPluginInstance  : public AudioPluginInstance
                                 , public UI
 {

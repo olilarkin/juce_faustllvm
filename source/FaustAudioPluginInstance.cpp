@@ -38,6 +38,7 @@
 
 #include "FaustAudioPluginInstance.h"
 #include "FaustAudioProcessorParameter.h"
+#include "FaustAudioProcessorEditor.h"
 
 FaustAudioPluginInstance::FaustAudioPluginInstance()
 : fDSPfactory(nullptr)
@@ -149,9 +150,7 @@ bool FaustAudioPluginInstance::hasEditor() const
 
 AudioProcessorEditor* FaustAudioPluginInstance::createEditor()
 {
-  FaustAudioProcessorEditor* editor = new FaustAudioProcessorEditor(*this);
-  fDSP->buildUserInterface(editor);
-  fDSP->metadata(editor);
+  FaustAudioProcessorEditor* editor = new FaustAudioProcessorEditor(*this, *fDSP);
   
   return editor;
 }

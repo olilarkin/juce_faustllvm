@@ -51,8 +51,7 @@
 #endif
 
 #define LLVM_OPTIMIZATION 3
-//#define DEFAULT_CODE "declare name \"Faust Effect\";\n\ngain = hslider(\"gain\", 1., 0., 1., 0.);\nprocess = _*(gain);"
-#define DEFAULT_CODE "//declare name \"Faust Node\";\n\nimport(\"math.lib\");\nimport(\"maxmsp.lib\");\nimport(\"music.lib\");\nimport(\"oscillator.lib\");\nimport(\"reduce.lib\");\nimport(\"filter.lib\");\nimport(\"effect.lib\");\n\nprocess=_,_;"
+#define DEFAULT_CODE "declare name \"Faust Effect\";\nimport(\"stdfaust.lib\");\nprocess = _;"
 
 #define HTML_WRAPPER "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n\
 <html>\n\
