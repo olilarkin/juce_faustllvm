@@ -69,6 +69,7 @@ public:
     
     ~SVGRenderThread()
     {
+      stopThread (-1);
       removeAllChangeListeners();
     }
     
