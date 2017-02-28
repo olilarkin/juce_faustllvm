@@ -114,16 +114,18 @@ llvm_dsp_factory* FaustgenFactory::createFactoryFromSourceCode(FaustAudioPluginI
 
   // Prepare compile options
   std::string error;
-  const char* argv[32];
-  memset(argv, 0, 32 * sizeof(char*));
+  const char* argv[64];
+  memset(argv, 0, 64 * sizeof(char*));
   
-  jassert(fCompileOptions.size() < 32);
+  jassert(fCompileOptions.size() < 64);
   
-  for (int opt = 0; opt < fCompileOptions.size(); opt++)
+  for (auto opt = 0; opt < fCompileOptions.size(); opt++)
   {
     argv[opt] = (char*) fCompileOptions.getReference(opt).toRawUTF8();
   }
-
+  
+  argv[fCompileOptions.size()] = 0; // NULL terminated argv
+  
   llvm_dsp_factory* factory = createDSPFactoryFromString(getTMPName().toStdString(), fSourceCode.toStdString(), fCompileOptions.size(), argv, getTarget(), error, LLVM_OPTIMIZATION);
     
   if (factory)
@@ -247,11 +249,11 @@ void FaustgenFactory::defaultCompileOptions()
   if (sizeof(FAUSTFLOAT) == 8)
     addCompileOption("-double");
   
-   if (fDrawPath != File::nonexistent) {
-     addCompileOption("-svg");
-     addCompileOption("-sn"); //use --simple-names (without arguments) during block-diagram generation
-     addCompileOption("-sd"); //try to further --simplify-diagrams before drawing them
-   }
+//   if (fDrawPath != File::nonexistent) {
+//     addCompileOption("-svg");
+//     addCompileOption("-sn"); //use --simple-names (without arguments) during block-diagram generation
+//     addCompileOption("-sd"); //try to further --simplify-diagrams before drawing them
+//   }
   
   for (int path=0;path<fLibraryPath.getNumPaths();path++)
     addCompileOption("-I", fLibraryPath[path].getFullPathName());
@@ -341,20 +343,26 @@ void FaustgenFactory::generateSVG()
  
   // Prepare compile options
   std::string error;
-  const char* argv[32];
-  memset(argv, 0, 32 * sizeof(char*));
+  const char* argv[64];
+  memset(argv, 0, 64 * sizeof(char*));
   
-  jassert(fCompileOptions.size() < 32);
+  jassert(fCompileOptions.size() < 64);
   
-  for (int opt = 0; opt < fCompileOptions.size(); opt++)
+  auto opt = 0;
+  
+  for (opt = 0; opt < fCompileOptions.size(); opt++)
   {
     argv[opt] = (char*) fCompileOptions.getReference(opt).toRawUTF8();
   }
   
+  argv[opt++] = "-svg";
+  argv[opt++] = "-sn";
+  argv[opt++] = "-sd";
+
   if (fDrawPath != File::nonexistent)
   {
     // Generate SVG file
-    if (!generateAuxFilesFromString(getTMPName().toStdString(), fSourceCode.toStdString(), fCompileOptions.size(), argv, error))
+    if (!generateAuxFilesFromString(getTMPName().toStdString(), fSourceCode.toStdString(), fCompileOptions.size() + 3, argv, error))
     {
       //TODO: if there is an error here STOP
       LOG("Generate SVG error : " + error);
