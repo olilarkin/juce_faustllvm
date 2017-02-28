@@ -19,7 +19,11 @@ FaustAudioProcessorEditor::FaustAudioProcessorEditor(AudioProcessor& processor, 
 
   fDSP.buildUserInterface(&juceGUI);
   
-  setSize(300, 300);
+  constrainer.setSizeLimits(200, 300, 1024, 768);
+  setConstrainer(&constrainer);
+  
+  setResizable (true, true);
+  setSize(300, 500);
   
   startTimerHz(25);
 }
@@ -30,7 +34,6 @@ FaustAudioProcessorEditor::~FaustAudioProcessorEditor()
 
 void FaustAudioProcessorEditor::paint(Graphics& g)
 {
-  g.fillAll (Colours::red);
 }
 
 void FaustAudioProcessorEditor::resized()

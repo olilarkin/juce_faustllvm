@@ -28,9 +28,10 @@ public:
   
 
 private:
-  Juce_GUI juceGUI;
+  JuceGUI juceGUI;
   dsp& fDSP;
-
+  ComponentBoundsConstrainer constrainer;
+  
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FaustAudioProcessorEditor)
 };
 
