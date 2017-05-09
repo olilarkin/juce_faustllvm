@@ -50,7 +50,7 @@
   #define SEPARATOR '\\'
 #endif
 
-#define LLVM_OPTIMIZATION 3
+#define LLVM_OPTIMIZATION -1
 #define DEFAULT_CODE "declare name \"Faust Effect\";\nimport(\"stdfaust.lib\");\nprocess = _;"
 
 #define HTML_WRAPPER "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n\
