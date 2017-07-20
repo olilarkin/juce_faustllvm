@@ -6,7 +6,7 @@ Should work on OSX, Linux and eventually Windows.
 
 See example CLI project https://github.com/olilarkin/juce_faustllvm_test
 
-##Dependencies:
+## Dependencies:
 
 **Mac Ports**
 
@@ -68,7 +68,7 @@ You may need libmicrohttpd, libsndfile installed as well.
 
 The .jucer projects expect to link against /usr/local/lib/libfaust.a
 
-##JUCER settings:
+## JUCER settings:
 
 When using the juce_faustllvm module you will need to add some things to your main .jucer project:
 
