@@ -74,10 +74,10 @@ You may need libmicrohttpd, libsndfile installed as well.
 The .jucer projects expect to link against ```/usr/local/lib/libfaust.a```
 
 
-# Generating juce_faustllvm.h
+#### Generating juce_faustllvm.h
 Once you have set up those things, you can use make, to convert juce_faustllvm.in to juce_faustllvm.h, which will use llvm-config to determine which LLVM libraries to link
 
-# Projucer settings for projects using the module:
+#### Projucer settings for projects using the module:
 
 When using the juce_faustllvm module you will need to add some things to your main .jucer project:
 
