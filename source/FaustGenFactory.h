@@ -36,8 +36,7 @@
   ==============================================================================
 */
 
-#ifndef FAUSTGENFACTORY_H_INCLUDED
-#define FAUSTGENFACTORY_H_INCLUDED
+#pragma once
 
 #include <iostream>
 #include <fstream>
@@ -178,4 +177,3 @@ public:
 };
 
 
-#endif  // FAUSTGENFACTORY_H_INCLUDED

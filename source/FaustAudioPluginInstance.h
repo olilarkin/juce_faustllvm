@@ -36,8 +36,7 @@
   ==============================================================================
 */
 
-#ifndef FaustAudioPluginInstance_H_INCLUDED
-#define FaustAudioPluginInstance_H_INCLUDED
+#pragma once
 
 #include <juce_audio_processors/juce_audio_processors.h>
 
@@ -141,4 +140,3 @@ private:
 };
 
 
-#endif  // FaustAudioPluginInstance_H_INCLUDED

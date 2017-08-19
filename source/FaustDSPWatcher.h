@@ -7,8 +7,7 @@
   ==============================================================================
 */
 
-#ifndef FAUSTDSPWATCHER_H_INCLUDED
-#define FAUSTDSPWATCHER_H_INCLUDED
+#pragma once
 
 #include <juce_core/juce_core.h>
 
@@ -42,4 +41,3 @@ private:
 };
 
 
-#endif  // FAUSTDSPWATCHER_H_INCLUDED

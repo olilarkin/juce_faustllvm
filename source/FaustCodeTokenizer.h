@@ -7,8 +7,7 @@
   ==============================================================================
 */
 
-#ifndef FAUSTCODETOKENIZER_H_INCLUDED
-#define FAUSTCODETOKENIZER_H_INCLUDED
+#pragma once
 
 #include <juce_gui_extra/juce_gui_extra.h>
 
@@ -46,4 +45,3 @@ private:
 };
 
 
-#endif  // FAUSTCODETOKENIZER_H_INCLUDED

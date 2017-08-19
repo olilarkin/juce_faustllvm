@@ -7,8 +7,7 @@
   ==============================================================================
 */
 
-#ifndef FaustAudioProcessorParameter_H_INCLUDED
-#define FaustAudioProcessorParameter_H_INCLUDED
+#pragma once
 
 #include "FaustAudioPluginInstance.h"
 #include <juce_audio_processors/juce_audio_processors.h>
@@ -61,4 +60,3 @@ private:
   StringArray nEntryLabels;
 };
 
-#endif  // FaustAudioProcessorParameter_H_INCLUDED

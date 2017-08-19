@@ -7,8 +7,7 @@
   ==============================================================================
 */
 
-#ifndef FAUSTFILEFILTER_H_INCLUDED
-#define FAUSTFILEFILTER_H_INCLUDED
+#pragma once
 
 #include <juce_core/juce_core.h>
 
@@ -67,4 +66,3 @@ public:
 
 
 
-#endif  // FAUSTFILEFILTER_H_INCLUDED

@@ -7,8 +7,7 @@
   ==============================================================================
 */
 
-#ifndef FAUSTPLUGINFORMAT_H_INCLUDED
-#define FAUSTPLUGINFORMAT_H_INCLUDED
+#pragma once
 
 #include "FaustAudioPluginInstance.h"
 
@@ -170,4 +169,3 @@ private:
 
 
 
-#endif  // FAUSTPLUGINFORMAT_H_INCLUDED
