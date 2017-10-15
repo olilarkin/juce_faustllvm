@@ -392,6 +392,11 @@ void FaustAudioPluginInstance::addVerticalBargraph(const char* label, FAUSTFLOAT
   //TODO:
 }
 
+void FaustAudioPluginInstance::addSoundfile(const char* label, Soundfile** sf_zone)
+{
+    //TODO:
+}
+
 void FaustAudioPluginInstance::initialize(const File &libraryPath, const File &svgPath)
 {
   // Empty (= no name) FaustAudioPluginInstance will be internally separated as groups with different names
