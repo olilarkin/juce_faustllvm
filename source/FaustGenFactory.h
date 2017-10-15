@@ -48,6 +48,7 @@
 
 #include "faust/gui/JSONUI.h"
 #include "faust/dsp/llvm-dsp.h"
+#include "faust/dsp/libfaust.h"
 
 using namespace juce;
 

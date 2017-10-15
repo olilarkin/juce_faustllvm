@@ -38,7 +38,7 @@
 
 #include "FaustGenFactory.h"
 #include "FaustAudioPluginInstance.h"
-#include <stdio.h>
+#include <cstdio>
 
 int FaustgenFactory::gFaustCounter = 0;
 std::map<String, FaustgenFactory*> FaustgenFactory::gFactoryMap;
