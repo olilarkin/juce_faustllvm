@@ -17,9 +17,9 @@ Instructions for building on various platforms:
 
 https://www.macports.org/
 
-Mac Ports is used to build many of the dependencies. Ports should be built with the +universal variant and macosx_deployment_target should be set in ```/opt/local/etc/macports/macports.conf``` to match the OSX Deployment Target setting in the .jucer project. e.g.
+Mac Ports is used to build many of the dependencies. Ports should be built with the ``+universal`` variant and macosx_deployment_target should be set in ```/opt/local/etc/macports/macports.conf``` to match the OSX Deployment Target setting in the .jucer project. e.g.
 
-```macosx_deployment_target 10.12```
+```macosx_deployment_target 10.9```
 
 the .jucer project expects ports to be installed in certain locations. If you have customized macports configuration, you may have to adjust the .jucer project in order to build.
 
@@ -27,11 +27,11 @@ even on a fast machine the following will take a long time to build! Be prepared
 
 To do everything in one go you can use the following command:
 
-```sudo port install llvm-4.0 +universal ncurses +universal zlib +universal openssl +universal```
+```sudo port install llvm-5.0 +universal ncurses +universal zlib +universal openssl +universal```
 
-**LLVM > 3.4 / <= 4.0**
+**LLVM > 3.4 / <= 5.0**
 
-Install via Macports e.g. ```sudo port install llvm-4.0 +universal```
+Install via Macports e.g. ```sudo port install llvm-5.0 +universal```
 
 The .jucer projects expects the libraries to be in ```/opt/local/libexec/llvm-x.x/lib```
 
@@ -101,7 +101,7 @@ In order to force static linking of the libraries, the full path to the the stat
 **Extra Library search paths:**
 
 ```
-/opt/local/libexec/llvm-4.0/lib
+/opt/local/libexec/llvm-5.0/lib
 /usr/local/lib
 /opt/local/lib
 ```
