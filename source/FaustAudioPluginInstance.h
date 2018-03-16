@@ -100,8 +100,8 @@ public:
   void addNumEntry(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT init, FAUSTFLOAT min, FAUSTFLOAT max, FAUSTFLOAT step) override;
   void addHorizontalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max) override;
   void addVerticalBargraph(const char* label, FAUSTFLOAT* zone, FAUSTFLOAT min, FAUSTFLOAT max) override;
-  void addSoundfile(const char* label, Soundfile** sf_zone) override;
-
+  void addSoundfile(const char* label, const char* filename, Soundfile** sf_zone) override;
+    
 // Unique
   void createDSP();
   void freeDSP();

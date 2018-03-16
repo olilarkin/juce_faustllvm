@@ -138,7 +138,7 @@ llvm_dsp_factory* FaustgenFactory::createFactoryFromSourceCode(FaustAudioPluginI
     {
       instance->highlightON(error);
     }
-    LOG("Invalid Faust code or compile options:" + error);
+    LOG("Invalid Faust  code or compile options:" + error);
     return 0;
   }
 }
