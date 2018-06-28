@@ -392,7 +392,7 @@ void FaustAudioPluginInstance::addVerticalBargraph(const char* label, FAUSTFLOAT
   //TODO:
 }
 
-void FaustAudioPluginInstance::addSoundfile(const char* label, Soundfile** sf_zone)
+void FaustAudioPluginInstance::addSoundfile(const char* label, const char* filename, Soundfile** sf_zone)
 {
     //TODO:
 }
