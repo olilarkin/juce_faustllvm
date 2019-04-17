@@ -1,4 +1,5 @@
 # LIBFAUST LLVM JIT Module for JUCE
+- this project is archived due to code rot - if someone has time to get it working with the latest JUCE, that would be great
 
 This is a JUCE Module for embedding the libfaust JIT compiler as a JUCE AudioProcessor/AudioPluginInstance. It includes supporting classes such as a Faust syntax highlighter for the JUCE code editor.
 
