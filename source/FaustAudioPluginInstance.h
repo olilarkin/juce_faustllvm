@@ -122,10 +122,10 @@ public:
   const String getCompilerMessage() { return lastCompilerMessage; }
 
   //MUST CALL AFTER CREATION
-  void initialize(const File &libraryPath, const File& svgPath = File::nonexistent);
+  void initialize(const File &libraryPath, const File& svgPath = {});
   
 private:
-  bool allocateFactory(const String& effectName, const File& libraryPath, const File& svgPath = File::nonexistent);
+  bool allocateFactory(const String& effectName, const File& libraryPath, const File& svgPath = {});
 
   template <typename FloatType>
   void process (AudioBuffer<FloatType>& buffer, MidiBuffer& midiMessages);

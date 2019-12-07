@@ -18,7 +18,7 @@ private:
   File svgPath;
 
 public:
-  FaustPluginFormat(const File& faustLibraryPath, const File& svgPath = File::nonexistent)
+  FaustPluginFormat(const File& faustLibraryPath, const File& svgPath = {})
   : faustLibraryPath(faustLibraryPath)
   , svgPath(svgPath)
   {
@@ -43,7 +43,7 @@ public:
   
   bool fileMightContainThisPluginType (const String& fileOrIdentifier) override
   {
-    if(fileOrIdentifier == String::empty)
+    if(fileOrIdentifier == String())
       return true;
     
     const File f (File::createFileWithoutCheckingPath (fileOrIdentifier));
@@ -60,6 +60,11 @@ public:
     return true;
   }
   
+  bool isTrivialToScan() const override
+  {
+    return true;
+  }
+  
   void findAllTypesForFile (OwnedArray <PluginDescription>& results, const String& fileOrIdentifier) override
   {
     if (! fileMightContainThisPluginType (fileOrIdentifier))
@@ -69,12 +74,12 @@ public:
     desc.fileOrIdentifier = fileOrIdentifier;
     desc.uid = 0;
     
-    ScopedPointer<FaustAudioPluginInstance> instance (dynamic_cast<FaustAudioPluginInstance*> (createInstanceFromDescription (desc, 44100., -1 /* so we don't compile*/)));
+    auto instance = createInstanceFromDescription (desc, 44100., -1 /* so we don't compile*/);
     
     if (instance == nullptr)
       return;
     
-    if (instance->getHighlight())
+    if (dynamic_cast<FaustAudioPluginInstance*>(instance.get())->getHighlight())
       return;
     
     instance->fillInPluginDescription (desc);
@@ -128,36 +133,39 @@ public:
   }
   
 private:
-  void createPluginInstance (const PluginDescription& desc, double initialSampleRate, int initialBufferSize, void* userData, void (*callback) (void*, AudioPluginInstance*, const String&)) override
+  void createPluginInstance (const PluginDescription& desc, double initialSampleRate, int initialBufferSize, PluginCreationCallback callback) override
   {
-    FaustAudioPluginInstance* result = nullptr;
+    std::unique_ptr<FaustAudioPluginInstance> result = nullptr;
     
     //This means we are in the scanning phase... we don't want to compile all the .dsps on load
     if (initialBufferSize == -1)
     {
       if (fileMightContainThisPluginType (desc.fileOrIdentifier))
       {
-        result = new FaustAudioPluginInstance();
+        result = std::make_unique<FaustAudioPluginInstance>();
       }
     }
     else
     {
-      result = new FaustAudioPluginInstance();
-      
+      result = std::make_unique<FaustAudioPluginInstance>();
+
       result->initialize(faustLibraryPath, svgPath);
-      
-      if(desc.fileOrIdentifier != String::empty && fileMightContainThisPluginType (desc.fileOrIdentifier))
+
+      if(desc.fileOrIdentifier != String() && fileMightContainThisPluginType (desc.fileOrIdentifier))
       {
         File dspFile = File(desc.fileOrIdentifier);
-        
+
         result->getFactory()->addLibraryPath(dspFile.getParentDirectory());
-        result->getFactory()->updateSourceCode(dspFile.loadFileAsString(), result);
+        result->getFactory()->updateSourceCode(dspFile.loadFileAsString(), result.get());
       }
-      
+
       result->prepareToPlay(initialSampleRate, initialBufferSize);
     }
-    
-    callback (userData, result, result == nullptr ? NEEDS_TRANS ("Problem creating FAUST Plugin Instance") : String());
+
+    if(result)
+        callback (std::move (result), {});
+    else
+        callback (nullptr, NEEDS_TRANS ("Invalid internal plugin name"));
   }
   
   bool requiresUnblockedMessageThreadDuringCreation (const PluginDescription&) const noexcept override

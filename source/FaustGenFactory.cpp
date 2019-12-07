@@ -95,7 +95,9 @@ void FaustgenFactory::freeDSPFactory()
 
 llvm_dsp_factory* FaustgenFactory::createFactoryFromBitcode()
 {
-  return readDSPFactoryFromBitcode(fBitCode.toStdString(), getTarget(), LLVM_OPTIMIZATION);
+  std::string error;
+  
+  return readDSPFactoryFromBitcode(fBitCode.toStdString(), getTarget(), error);
   
   /*
     Alternate model using machine code
@@ -213,7 +215,7 @@ void FaustgenFactory::addLibraryPath(const File& libraryPath)
 
 void FaustgenFactory::addCompileOption(const String& key, const String& value)
 {
-  if ((value != String::empty) && !fCompileOptions.contains(value))
+  if ((value != String()) && !fCompileOptions.contains(value))
   {
     fCompileOptions.add(key);
     fCompileOptions.add(value);
@@ -222,7 +224,7 @@ void FaustgenFactory::addCompileOption(const String& key, const String& value)
 
 void FaustgenFactory::addCompileOption(const String& value)
 {
-  if ((value != String::empty))
+  if ((value != String()))
   {
     fCompileOptions.addIfNotAlreadyThere(value);
   }
@@ -258,7 +260,7 @@ void FaustgenFactory::defaultCompileOptions()
   for (int path=0;path<fLibraryPath.getNumPaths();path++)
     addCompileOption("-I", fLibraryPath[path].getFullPathName());
   
-   if (fDrawPath != File::nonexistent)
+   if (fDrawPath != File())
      addCompileOption("-O", fDrawPath.getFullPathName());
   
   //addCompileOption("-o", "tmp1.cpp");
@@ -298,7 +300,7 @@ void FaustgenFactory::setStateInformation (XmlElement& xml)
   String sourcecode;
   String bitcode;
   
-  if (faustgen_version == String::empty)
+  if (faustgen_version == String())
   {
     LOG("Cannot read \"version\" key, so ignore bitcode, force recompilation and use default compileoptions");
     goto default_sourcecode;
@@ -313,7 +315,7 @@ void FaustgenFactory::setStateInformation (XmlElement& xml)
   
   bitcode = xml.getStringAttribute("bitcode");
 
-  if (bitcode != String::empty)
+  if (bitcode != String())
   {
     fBitCode = bitcode;
   }
@@ -321,7 +323,7 @@ void FaustgenFactory::setStateInformation (XmlElement& xml)
 read_sourcecode:
   sourcecode = xml.getStringAttribute("sourcecode");
   
-  if (sourcecode != String::empty)
+  if (sourcecode != String())
   {
     fSourceCode = sourcecode;
     return;
@@ -359,7 +361,7 @@ void FaustgenFactory::generateSVG()
   argv[opt++] = "-sn";
   argv[opt++] = "-sd";
 
-  if (fDrawPath != File::nonexistent)
+  if (fDrawPath != File())
   {
     // Generate SVG file
     if (!generateAuxFilesFromString(getTMPName().toStdString(), fSourceCode.toStdString(), fCompileOptions.size() + 3, argv, error))
@@ -377,10 +379,10 @@ void FaustgenFactory::generateSVG()
       htmlFile.appendText(HTML_WRAPPER);  
     #else
       XmlDocument svgXML(svgFile);
-      ScopedPointer<XmlElement> mainElement (svgXML.getDocumentElement());
+      std::unique_ptr<XmlElement> mainElement (svgXML.getDocumentElement());
       mainElement->setAttribute("width", "100%");
       mainElement->setAttribute("height", "100%");
-      mainElement->writeToFile(svgFile, String::empty);
+      mainElement->writeToFile(svgFile, String());
     #endif
     }
   }
@@ -388,7 +390,7 @@ void FaustgenFactory::generateSVG()
 
 void FaustgenFactory::removeSVG()
 {
-  if (fDrawPath != File::nonexistent)
+  if (fDrawPath != File())
   {
     getSVGFile().getParentDirectory().deleteRecursively();
   }

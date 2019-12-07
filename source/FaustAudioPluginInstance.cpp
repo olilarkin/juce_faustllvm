@@ -45,8 +45,8 @@ FaustAudioPluginInstance::FaustAudioPluginInstance()
 , fDSP(nullptr)
 , highlight(false)
 , needsToBeCompiled(false)
-, tempSourceCode(String::empty)
-, lastCompilerMessage(String::empty)
+, tempSourceCode(String())
+, lastCompilerMessage(String())
 {
 }
 
@@ -70,7 +70,7 @@ void FaustAudioPluginInstance::fillInPluginDescription (PluginDescription& descr
   description.category = "";
   description.manufacturerName = getAuthor();
   description.version = "";
-  //description.fileOrIdentifier = String::empty; //TODO:? Keep link to file?
+  //description.fileOrIdentifier = String(); //TODO:? Keep link to file?
   //description.lastFileModTime = Time(0);
   description.isInstrument = false;
   description.hasSharedContainer = false;
@@ -94,7 +94,7 @@ void FaustAudioPluginInstance::fillInitialInPluginDescription (PluginDescription
   description.category = "";
   description.manufacturerName = "";
   description.version = "";
-  description.fileOrIdentifier = String::empty;
+  description.fileOrIdentifier = String();
   description.lastFileModTime = Time(0);
   description.isInstrument = false;
   description.hasSharedContainer = false;
@@ -243,7 +243,7 @@ void FaustAudioPluginInstance::getStateInformation (MemoryBlock& destData)
 
 void FaustAudioPluginInstance::setStateInformation (const void* data, int sizeInBytes)
 {
-  ScopedPointer<XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
+  std::unique_ptr<XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
   
   if (xmlState != nullptr)
   {

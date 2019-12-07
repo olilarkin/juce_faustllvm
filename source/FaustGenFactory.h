@@ -113,7 +113,7 @@ private:
 public:
   CriticalSection fDSPMutex;    // mutex to protect RT audio thread when recompiling DSP
 
-  FaustgenFactory(const String& name, const File& libraryPath, const File& svgPath = File::nonexistent);
+  FaustgenFactory(const String& name, const File& libraryPath, const File& svgPath = {});
   ~FaustgenFactory();
   
   llvm_dsp_factory* createFactoryFromBitcode();
